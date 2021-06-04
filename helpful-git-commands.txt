@@ -1,0 +1,13 @@
+# This script will document useful git commands.
+
+git clone # this creates a local copy of a github respository
+git remote # this command visualizes the remote I'm connected to
+# by default our remote is called origin
+git fetch origin # this grabs all the branches that are on github
+git branch -r # this returns all of the branches from the remote
+# in this case that is origin
+git checkout --track origin/start-documentation
+git status # use status to see whether files have been added and committed
+git add helpful-git-commands.sh # to add new files
+git commit -m “mario and kels will collaborate on this doc” # a commit message is required
+git push # publish changes to remote repository
