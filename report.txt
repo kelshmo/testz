@@ -1,0 +1,31 @@
+report.txt
+Argentina:1
+Australia:3
+Belgium:2
+Brazil:2
+Canada:11
+China:19
+Cyprus:1
+Denmark:3
+Finland:1
+France:4
+Germany:3
+Germany :1
+Hong Kong:1
+India:5
+Israel:1
+Italy:3
+Japan:4
+Japan :1
+Kazakhstan:1
+Netherlands:2
+Romania:1
+Russia:9
+South Korea:2
+Spain:5
+Sweden:2
+Switzerland:2
+Taiwan:1
+Thailand:4
+UK:6
+USA:37
