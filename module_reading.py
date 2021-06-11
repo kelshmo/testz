@@ -13,10 +13,11 @@ enumetarte the columns in order. In Python first position
 is 0
 """
 
-import csv # importing CSV module to work with comma separated data.
+import csv
+from sys import *
 
-def enumerate_columns(csv_file_location):
-    filename = csv_file_location # reading the file, we can give a path as well.
+def enumerate_columns(entity.path):
+    filename = entity.path 
     with open (filename) as f:
         reader = csv.reader(f)
         header_row = next(reader)
@@ -25,46 +26,47 @@ def enumerate_columns(csv_file_location):
 
     for index, column_header in enumerate(header_row):
         print(index, column_header)
-enumerate_columns(entity.path)
 
 
 """
 this function recive a csv file or path as a parameter and
-return a list of dictionaries per example, each and single one
+return as output a list of dictionaries per example, each and single one
 unique.
-
 # side note, 
 # dialect main pourpose is to remove any lead space while parsing the csv file.
 
 """
-def read_file(csv_file_location):
+def read_file(entity.path):
+    path_to_grab = entity.path
     csv.register_dialect('readDialect', skipinitialspace=True, strict=True)
-    file = csv.DictReader(open(csv_file_location), dialect='readDialect')
+    file = csv.DictReader(open(path_to_grab), dialect='readDialect')
     instance_list = []
     for data in file:
         instance_list.append(data) # or path  "path"
     return instance_list
 instance_list = read_file('')
-print(instance_list)
 
 """
-This function will <count> how many <Developer_Country> s are
-
+This function will count categories from a 
+categorical column, the idea will be to chek 
+what is categorical and what is numerical
 """
 def process_data(instance_list):
-    country_list = []
+    categorical_list = []
     for instance_data in instance_list:
-      country_list.append(instance_data["entity.path['colum']"])
-    country_data = {}
-    for country_name in set(country_list):
-        country_data[country_name] = country_list.count(country_name)
-    return country_data
+        ## looking for categories, also get just numbers.
+        ## I need to loo a bit more closelly to this, to make it more general
+        ## if the lenght of the column is less than the column, there is categories?
+        ## maybe to strict, perhaps 75% of the lenght
+            categorical_list.append(instance_data["i"]) ## so we can pass any colum name
+            categorical_data = {}
+    for categorical_name in set(categorical_list):
+        categorical_data[categorical_name] = categorical_list.count(categorical_name)
+    return categorical_data
 
 dictionary = process_data(instance_list)
-print(dictionary)
 
 """
-
 This Fucntion will write a report about our findings
 """
 def write_report(dictionary, report_file):
@@ -72,4 +74,4 @@ def write_report(dictionary, report_file):
         for k in sorted(dictionary):
          f.write(str(k)+':'+ str(dictionary[k])+'\n')
         f.close()
-write_report(dictionary, "name_file.extention")
+write_report(dictionary, "file.extention")
