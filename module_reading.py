@@ -1,4 +1,4 @@
-module_reading.py
+# module_reading.py
 """
 This is a Module wrote in Python3, it will be
 helpful to have a first observation of csv files.
@@ -25,7 +25,7 @@ def enumerate_columns(csv_file_location):
 
     for index, column_header in enumerate(header_row):
         print(index, column_header)
-enumerate_columns('125.csv')
+enumerate_columns(entity.path)
 
 
 """
@@ -44,7 +44,7 @@ def read_file(csv_file_location):
     for data in file:
         instance_list.append(data) # or path  "path"
     return instance_list
-instance_list = read_file('125.csv')
+instance_list = read_file('')
 print(instance_list)
 
 """
@@ -54,7 +54,7 @@ This function will <count> how many <Developer_Country> s are
 def process_data(instance_list):
     country_list = []
     for instance_data in instance_list:
-      country_list.append(instance_data["Developer_Country"])
+      country_list.append(instance_data["entity.path['colum']"])
     country_data = {}
     for country_name in set(country_list):
         country_data[country_name] = country_list.count(country_name)
@@ -72,4 +72,4 @@ def write_report(dictionary, report_file):
         for k in sorted(dictionary):
          f.write(str(k)+':'+ str(dictionary[k])+'\n')
         f.close()
-write_report(dictionary, "report.txt")
+write_report(dictionary, "name_file.extention")
