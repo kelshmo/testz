@@ -21,8 +21,8 @@ entity2 = syn.get('syn1899498',downloadFile=True, downloadLocation='.')# this ca
 ## this code will create n pandas data frame object
 ## this time 2
 
-df1 = pd.read_csv('entity.path', sep='\t')
-df2 = pd.read_csv('entity.path', sep='\t')
+df1 = pd.read_csv(entity.path, sep='\t')
+df2 = pd.read_csv(entity.path, sep='\t')
  
 ## if we run the folowing code it will display the
 ## wanted amount of exemples of the dataframe object

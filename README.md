@@ -1,17 +1,15 @@
 # testz
-This repo is a sandbox for me to test out the Synapse and colaborate:
+This repo is a sandbox for a project to explore and adjust data set,
+taking out probles that could prevent us of future analysis, Its broken
+down in three mayor, parts and for this especifi case requires some domain
+knowledgeThis repo is a sandbox for a project to explore and adjust data set
+Its broken down in three mayor, parts and for this specific case requires some 
+domain Knowledge.
+Here the parts:
+*Data cleaning, we will attempt to take out any problem that can prevent us
+of future analysis. 
+*data exploration, we will look for relationships that can help us understand
+The relationship between other variables
+*feature engineering
+Creation of new columns based on information and joints.
 
-Features : 
-	   recive a data frame
-	   evaluate basic information	
-	   concat data frames in different ways
-
-	   I will also add code that could be beneficial for the analysis.
-thanks 
-
-form the last revision:
-           REDME, has been updated.
-	   currently working on module_reading.py to make it more general
-	   outputs has been explained, and
-	   added an extra line at the end of the code
-	   oso_panda.py has been updated to syn_pandas.py and updated
