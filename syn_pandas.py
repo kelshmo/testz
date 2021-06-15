@@ -2,8 +2,9 @@ import synapseclient
 import csv
 import pandas as pd
 import numpy as np
+from synapseclient import * 
 
-syn = synapseclient.Synapse()
+syn = synapseclient.Synapse() ## here is the personal log in of your synapse client log
 syn = synapseclient.login()
 
 ## ____________________
@@ -12,38 +13,39 @@ syn = synapseclient.login()
 
 ## ____________________
 
-# two data sets
-entity = syn.get('syn1899498',downloadFile=True, downloadLocation='.')
-entity2 = syn.get('syn1899498',downloadFile=True, downloadLocation='.')# this can be a different data set
-#print(entity2.path)
-#print(entity.path)
+test_entity = File('acs2017_county_data.csv', description='toy_data_wa', parent='syn25878110')
+test_entity = syn.store(test_entity)
+test_entity2 = File('PovertyEstimates 2.csv', description='toy_data_wa2', parent='syn25878110')
+test_entity2 = syn.store(test_entity2)
+test_entity3 = File('County Voting.csv', description='toy_data_wa3', parent='syn25878110')
+test_entity3 = syn.store(test_entity3)
 
-## this code will create n pandas data frame object
-## this time 2
 
-df1 = pd.read_csv(entity.path, sep='\t')
-df2 = pd.read_csv(entity.path, sep='\t')
- 
-## if we run the folowing code it will display the
-## wanted amount of exemples of the dataframe object
-## we dont want to .tail() method will show last 5
-# df1.head()
-# df2.head()
 
-## this technique  let us know the shape
+entity = syn.get('syn25878115',downloadFile=True, downloadLocation='.')
+entity2 = syn.get('syn25878114',downloadFile=True, downloadLocation='.')
+entity3 = syn.get('syn25878112',downloadFile=True, downloadLocation='.')
 
-print(df1.shape)
-print(df2.shape)
+## Note that in some cases data can be is csv, but it can be tab separate also.
+## Defining the frames
+df1 = pd.read_csv(entity.path)#, sep='\t')
+df2 = pd.read_csv(entity2.path)#, sep='\t')
+df3 = pd.read_csv(entity3.path)#, sep='\t')
 
-## the folowing code if for statistical descriptors
-## it will include counts, mean, std, min, 0.25 0.5 and 0.75 
-## quantiles
+## creating a list of the frames, so we can pass methods
+## and get shape, data type information, max and min and 
+## basic statistics
 
-print(df1.describe())
-print(df2.describe())
+df = [df1, df2, df3]
 
-## the folowing code will display a list object
-## with the name of the columns
+for f in dfs:
+    print(f.shape)
+    print(f.info())
+    print(f.head()) # or tail 
+    print(f.describe())
+
+## 
+##
 
 print(df1.columns)
 print(df2.columns)
