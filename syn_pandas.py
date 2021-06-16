@@ -45,18 +45,24 @@ for f in dfs:
     print(f.head()) # or tail 
     print(f.describe())
 
-print(df1.columns)
-print(df2.columns)
-print(df3.columns)
-## cleaning column names
-print(df1.columns)
-print(df2.columns)
-print(df3.columns)
-# this code shoul
-for c in dfs:
-    all_columns =+ c.columns
+## as we are going to manage to joint data frames, the
+## columns should have as well similar format for easy access
+## there is more especificatons that can be espressed here
 
-print(all_columns)
+for df in dfs:
+    df.columns = df.columns.str.strip().str.lower()
+    print(df.columns)
+
+## After all that analysis we can notice than the information
+## in fips is shared and we can joint the data there. 
+## the columns names expressed differently fips, county_fips, 
+## and countyid
+
+
+df1.rename(columns = {'county_fips':'fips'}, inplace = True)
+print(df1.columns)
+df3.rename(columns = {'countyid':'fips'}, inplace = True)
+print(df3.columns)
 
 
 ## concatenation of the dataframe objects.
