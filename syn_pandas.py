@@ -13,12 +13,13 @@ syn = synapseclient.login()
 
 ## ____________________
 
-test_entity = File('acs2017_county_data.csv', description='toy_data_wa', parent='syn25878110')
-test_entity = syn.store(test_entity)
-test_entity2 = File('PovertyEstimates 2.csv', description='toy_data_wa2', parent='syn25878110')
-test_entity2 = syn.store(test_entity2)
-test_entity3 = File('County Voting.csv', description='toy_data_wa3', parent='syn25878110')
-test_entity3 = syn.store(test_entity3)
+## this code was used to upload the data
+#test_entity = File('acs2017_county_data.csv', description='toy_data_wa', parent='syn25878110')
+#test_entity = syn.store(test_entity)
+#test_entity2 = File('PovertyEstimates 2.csv', description='toy_data_wa2', parent='syn25878110')
+#test_entity2 = syn.store(test_entity2)
+#test_entity3 = File('County Voting.csv', description='toy_data_wa3', parent='syn25878110')
+#test_entity3 = syn.store(test_entity3)
 
 
 
@@ -36,7 +37,7 @@ df3 = pd.read_csv(entity3.path)#, sep='\t')
 ## and get shape, data type information, max and min and 
 ## basic statistics
 
-df = [df1, df2, df3]
+dfs = [df1, df2, df3]
 
 for f in dfs:
     print(f.shape)
@@ -44,17 +45,19 @@ for f in dfs:
     print(f.head()) # or tail 
     print(f.describe())
 
-## 
-##
-
 print(df1.columns)
 print(df2.columns)
+print(df3.columns)
+## cleaning column names
+print(df1.columns)
+print(df2.columns)
+print(df3.columns)
+# this code shoul
+for c in dfs:
+    all_columns =+ c.columns
 
-## the folowing code will display range index, class of the object
-## data type, also null values and other important information
+print(all_columns)
 
-print(df1.info())
-print(df2.info())
 
 ## concatenation of the dataframe objects.
 ## they are different methods to do this task and is recommended
@@ -65,7 +68,7 @@ print(df2.info())
 ## one, creating a df with original columns and rows as addition
 ## of both rows. We define a list with the dataframe objects, the pass
 ## it to the concat function that recives one argumet (the list)
-dfs = [df1, df2]
+
 concated_dfs = pd.concat(
                         dfs,
                         axis=0,     #the axis that we would like to concatenate
@@ -83,7 +86,7 @@ concated_dfs = pd.concat(
 ## adding keys, it will help us keep track of the original dfs, 
 ## it will be and identification mark of the original data set
 
-dfs = [df1, df2]
+
 concated_dfs = pd.concat(
                         dfs,
                         axis=0,     #the axis that we would like to concatenate
