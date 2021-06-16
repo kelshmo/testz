@@ -65,6 +65,33 @@ df3.rename(columns = {'countyid':'fips'}, inplace = True)
 print(df3.columns)
 
 
+## missing data
+for f in dfs:
+    total_missing = f.isnull().sum().sort_values(ascending=False)
+    percent_missing = (f.isnull().sum()/f.isnull().count()).sort_values(ascending=False)
+    missing_data = pd.concat([total_missing, percent_missing], axis=1, keys=['Total', 'Percent'])
+    print(missing_data.head(10))
+    for i in range(0, len(total_missing)):
+        if total_missing[i] != 0:
+            print('\n\tERROR!!, We are missing data')
+        else: pass
+
+## more than 80% of missing values we should consider dropping the 
+## column. In this case is a very small fraction but is a good 
+## portunity to visit the problem. There is a lot to consider 
+## when filling Null values, after this considerations,  we may use, 
+## mean, medium, mode, interpolation or a random number. 
+
+## here we will look into the fips of the missing area is null
+null_rows = df[df.isnull().any(axis=1)]
+if null_rows.item() != 0:
+    null_column = df[df.isnull().any(axis=0)]
+    null_column
+#print(df3['childpoverty'])
+
+
+
+
 ## concatenation of the dataframe objects.
 ## they are different methods to do this task and is recommended
 ## to explore the dfs, or have previous domain knowledge of the information
