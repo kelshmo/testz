@@ -76,72 +76,79 @@ for f in dfs:
             print('\n\tERROR!!, We are missing data')
         else: pass
 
-## more than 80% of missing values we should consider dropping the 
+df3.dropna(inplace=True)
+
+for f in dfs:
+    total_missing = f.isnull().sum().sort_values(ascending=False)
+    percent_missing = (f.isnull().sum()/f.isnull().count()).sort_values(ascending=False)
+    missing_data = pd.concat([total_missing, percent_missing], axis=1, keys=['Total', 'Percent'])
+    print(missing_data.head(10))
+    for i in range(0, len(total_missing)):
+        if total_missing[i] != 0:
+            print('\n\tERROR!!, We are missing data')
+        else: pass
+
+## if more than 80% of missing values we should consider dropping the 
 ## column. In this case is a very small fraction but is a good 
-## portunity to visit the problem. There is a lot to consider 
+## oportunity to visit the problem. There is a lot to consider 
 ## when filling Null values, after this considerations,  we may use, 
 ## mean, medium, mode, interpolation or a random number. 
 
 ## here we will look into the fips of the missing area is null
-null_rows = df[df.isnull().any(axis=1)]
-if null_rows.item() != 0:
-    null_column = df[df.isnull().any(axis=0)]
-    null_column
-#print(df3['childpoverty'])
+## this code should coordenate the single Null (in this case)
+ #   null_rows = df[df.isnull().any(axis=1)]
+ #   if null_rows.shape() ###!= [0,0]:
+ #       null_column = df[df.isnull().any(axis=0)]
+ #       null_column
+
+#  print(null_rows, null_column)
+## 
 
 
+## This method will merge the data set on the shared key column
 
-
-## concatenation of the dataframe objects.
-## they are different methods to do this task and is recommended
-## to explore the dfs, or have previous domain knowledge of the information
-## as shape, dtypes.
-
-## This method will concatenate data set at the end of the first
-## one, creating a df with original columns and rows as addition
-## of both rows. We define a list with the dataframe objects, the pass
-## it to the concat function that recives one argumet (the list)
-
-concated_dfs = pd.concat(
-                        dfs,
-                        axis=0,     #the axis that we would like to concatenate
-                        join="outer", #the type of joint
-                        ignore_index=False, # important as if set to True, will reorganize the index 0 to n-1
-                        keys=None, #construct herarchical indexes base on the keys passes (as a tuple if more than 1)
-                        levels=None, #
-                        names=None, #
-                        verify_integrity=False, 
-                        copy=True #
+concated_dfs = pd.merge(
+                        left=df1,
+                        right=df2, #list of dataframes
+                        how='inner',
+                        on='fips',
+                        left_on=None, 
+                        right_on=None, 
+                        left_index=False, 
+                        right_index=False, 
+                        sort=False, 
+                        suffixes=('_x', '_y'), 
+                        copy=True, 
+                        indicator='exist',# leave a mark
+                        validate=None
                         )
-## the folowing code will show the dfs, take uncomment to show.
-#print(concated_dfs)
-
-## adding keys, it will help us keep track of the original dfs, 
-## it will be and identification mark of the original data set
-
-
-concated_dfs = pd.concat(
-                        dfs,
-                        axis=0,     #the axis that we would like to concatenate
-                        join="outer", #the type of joint
-                        ignore_index=False, # important as if set to True, will reorganize the index 0 to n-1
-                        keys=['a','b'], #construct herarchical indexes base on the keys passes (as a tuple if more than 1)
-                        levels=None, #
-                        names=None, #
-                        verify_integrity=False, 
-                        copy=True # 
+                        
+big_dfs = pd.merge(
+                        left=concated_dfs,
+                        right=df3, #list of dataframes
+                        how='inner',
+                        on='fips',
+                        left_on=None, 
+                        right_on=None, 
+                        left_index=False, 
+                        right_index=False, 
+                        sort=False, 
+                        suffixes=('_x', '_y'), 
+                        copy=True, 
+                        indicator=True,# leave a mark
+                        validate=None
                         )
-## the folowing code will show the dfs, take uncomment to show.
-print('concatenated data frames')
-print(concated_dfs)
 
-## seting the key is great as we can refeer to the data original data set nicelly
-## with the folowing code
 
 ## the folowing code will show the dfs, take uncomment to show.
-## printing especific herarchical index, this case 'a' corresponding
-## to the original df
-print(concated_dfs.loc['a'])
+print('big_df')
+print(big_dfs)
+
+print(big_dfs.shape)
+print(big_dfs.info())
+print(big_dfs.head()) # or tail 
+print(big_dfs.describe())
+
 
 ############################
 
