@@ -140,7 +140,7 @@ big_dfs = pd.merge(
                         )
 
 
-## the folowing code will show the dfs, take uncomment to show.
+## the folowing code will show the merged dfs
 print('big_df')
 print(big_dfs)
 
@@ -149,8 +149,25 @@ print(big_dfs.info())
 print(big_dfs.head()) # or tail 
 print(big_dfs.describe())
 
-
 ############################
+## 
+
+## missing data
+
+total_missing = big_dfs.isnull().sum().sort_values(ascending=False)
+percent_missing = (big_dfs.isnull().sum()/big_dfs.isnull().count()).sort_values(ascending=False)
+missing_data = pd.concat([total_missing, percent_missing], axis=1, keys=['Total', 'Percent'])
+print(missing_data.head(10))
+for i in range(0, len(total_missing)):
+    if total_missing[i] != 0:
+            print('\n\tERROR!!, We are missing data')
+    else: pass
+
+
+
+
+
+
 
 ## creating a random df of similar characteristics
 ## it will be 3 columns by 100 rows and the random numbers
