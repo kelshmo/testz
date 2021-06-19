@@ -1,34 +1,47 @@
-import synapseclient
+import synapseclient as sc
 import csv
 import pandas as pd
 import numpy as np
 from synapseclient import * 
 
-syn = synapseclient.Synapse() ## here is the personal log in of your synapse client log
-syn = synapseclient.login()
+syn = sc.Synapse() ## here is the personal log in of your synapse client log
+syn = sc.login()
 
 ## ____________________
-# provenance
-# set activity
+#    act = Activity(
+#                name='merging_sets', 
+#                description='union of data set on intersections'
+#                )
+#    act.used(['syn25878115','syn25878114', 'syn25878112'])
+#    act.executed('')
 
 ## ____________________
 
-## this code was used to upload the data
-#test_entity = File('acs2017_county_data.csv', description='toy_data_wa', parent='syn25878110')
+## this code was used to upload the data locally 
+
+#test_entity = File('acs2017_county_data.csv', 
+#                    description='toy_data_wa', 
+#                    parent='syn25878110')
 #test_entity = syn.store(test_entity)
-#test_entity2 = File('PovertyEstimates 2.csv', description='toy_data_wa2', parent='syn25878110')
+#test_entity2 = File('PovertyEstimates 2.csv', 
+#                     description='toy_data_wa2', 
+#                     parent='syn25878110')
 #test_entity2 = syn.store(test_entity2)
-#test_entity3 = File('County Voting.csv', description='toy_data_wa3', parent='syn25878110')
+#test_entity3 = File('County Voting.csv', 
+#                     description='toy_data_wa3', 
+#                     parent='syn25878110')
 #test_entity3 = syn.store(test_entity3)
 
 
+entity = syn.get('syn25878115',downloadFile=True, 
+                  downloadLocation='.')
+entity2 = syn.get('syn25878114',downloadFile=True, 
+                  downloadLocation='.')
+entity3 = syn.get('syn25878112',downloadFile=True, 
+                  downloadLocation='.')
 
-entity = syn.get('syn25878115',downloadFile=True, downloadLocation='.')
-entity2 = syn.get('syn25878114',downloadFile=True, downloadLocation='.')
-entity3 = syn.get('syn25878112',downloadFile=True, downloadLocation='.')
-
-## Note that in some cases data can be is csv, but it can be tab separate also.
-## Defining the frames
+## Note that in some cases data can be is csv, but it 
+## can be tab separate also defining the frames
 df1 = pd.read_csv(entity.path)#, sep='\t')
 df2 = pd.read_csv(entity2.path)#, sep='\t')
 df3 = pd.read_csv(entity3.path)#, sep='\t')
@@ -77,16 +90,6 @@ for f in dfs:
         else: pass
 
 df3.dropna(inplace=True)
-
-for f in dfs:
-    total_missing = f.isnull().sum().sort_values(ascending=False)
-    percent_missing = (f.isnull().sum()/f.isnull().count()).sort_values(ascending=False)
-    missing_data = pd.concat([total_missing, percent_missing], axis=1, keys=['Total', 'Percent'])
-    print(missing_data.head(10))
-    for i in range(0, len(total_missing)):
-        if total_missing[i] != 0:
-            print('\n\tERROR!!, We are missing data')
-        else: pass
 
 ## if more than 80% of missing values we should consider dropping the 
 ## column. In this case is a very small fraction but is a good 
@@ -141,18 +144,7 @@ big_dfs = pd.merge(
 
 
 ## the folowing code will show the merged dfs
-print('big_df')
-print(big_dfs)
-
-print(big_dfs.shape)
-print(big_dfs.info())
-print(big_dfs.head()) # or tail 
-print(big_dfs.describe())
-
-############################
-## 
-
-## missing data
+## and basic information about it also missing values.
 
 total_missing = big_dfs.isnull().sum().sort_values(ascending=False)
 percent_missing = (big_dfs.isnull().sum()/big_dfs.isnull().count()).sort_values(ascending=False)
@@ -163,27 +155,17 @@ for i in range(0, len(total_missing)):
             print('\n\tERROR!!, We are missing data')
     else: pass
 
+## the folowing code will show the merged dfs
+print('big_df')
+print(big_dfs)
 
+print(big_dfs.shape)
+print(big_dfs.info())
+print(big_dfs.head()) # or tail 
+print(big_dfs.describe())
 
+big_dfs.to_csv('big_df.csv', sep='\t', index=False, header=True)
 
-
-
-
-## creating a random df of similar characteristics
-## it will be 3 columns by 100 rows and the random numbers
-## will be normally distribuited and with the 
-## reason to explore more concatenations
-
-mean = 0
-sd = 1
-n = 100
-
-random_df = pd.DataFrame({'A_':np.random.normal(mean, sd, n), 
-                          'B_':np.random.normal(mean, sd, n),
-                          'C_':np.random.normal(mean, sd, n),
-                         })
-
-print(random_df.head(100))
-print(random_df.shape)
-
-##############################
+############################
+## to upload to synapse
+#version_1 = syn.store(File('big_df.csv', parentId='syn25878110'))
