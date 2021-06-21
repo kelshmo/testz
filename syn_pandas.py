@@ -17,7 +17,8 @@ syn = sc.login()
 
 ## ____________________
 
-## this code was used to upload the data locally 
+## this code was used to upload the data from
+## local machine into synapseclient 
 
 #test_entity = File('acs2017_county_data.csv', 
 #                    description='toy_data_wa', 
@@ -33,6 +34,8 @@ syn = sc.login()
 #test_entity3 = syn.store(test_entity3)
 
 
+## Code to download TSV in current location
+## 
 entity = syn.get('syn25878115',downloadFile=True, 
                   downloadLocation='.')
 entity2 = syn.get('syn25878114',downloadFile=True, 
@@ -40,8 +43,8 @@ entity2 = syn.get('syn25878114',downloadFile=True,
 entity3 = syn.get('syn25878112',downloadFile=True, 
                   downloadLocation='.')
 
-## Note that in some cases data can be is csv, but it 
-## can be tab separate also defining the frames
+## Note that in some cases data can be is csv
+
 df1 = pd.read_csv(entity.path)#, sep='\t')
 df2 = pd.read_csv(entity2.path)#, sep='\t')
 df3 = pd.read_csv(entity3.path)#, sep='\t')
@@ -168,4 +171,6 @@ big_dfs.to_csv('big_df.csv', sep='\t', index=False, header=True)
 
 ############################
 ## to upload to synapse
-#version_1 = syn.store(File('big_df.csv', parentId='syn25878110'))
+## the folowing code was used to upload the merged df
+## please remove hashtag if we need to run upload (uploaded already)
+# version_1 = syn.store(File('big_df.csv', parentId='syn25878110'))
