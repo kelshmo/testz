@@ -28,12 +28,12 @@ for items in entity_list:
         df_merged = reduce(lambda left, right:pd.merge(left, right, on=['fips'], how='inner'),li)
         # reduce a function to an iterable and reduce it to a single cumulative value.
 df_merged.to_csv('big_df.csv')# changing into csv
-version_1 = syn.store(File('big_df.csv', parentId='syn25878110', used=entity_list))
-project = syn.store(version_1, used=entity_list)
+version_1 = syn.store(File('big_df.csv', parentId='syn25878110'), used=entity_list)
+# project = syn.store(version_1, used=entity_list, used)
 
 ############################
 ## to upload to synapse
 ## the folowing code was used to upload the merged df
 ## please remove hashtag if we need to run upload (uploaded already)
-version_1 = syn.store(File('big_df.csv', parentId='syn25878110', used=used_files))
-project = syn.store(version_1)# list of input files and IDS
+#version_1 = syn.store(File('big_df.csv', parentId='syn25878110', used=used_files))
+#project = syn.store(version_1)# list of input files and IDS
