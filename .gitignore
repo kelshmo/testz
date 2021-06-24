@@ -127,3 +127,36 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+## Tubular data text formats
+*.table
+*.csv
+*.tsv
+# Spreadsheet formats
+*.xls
+*.xlsx
+*.ods
+*.sxc
+*.dif
+# Data interchange formats
+*.RawJSON
+*.json
+*.ubj
+# Statistical formats
+*.sas7dbat
+*.xport
+*.sav
+*.zsav
+
+## some local scripts
+testzCopy
+syn_pandas_borrador.py
+.DS_Store
+generate_df.py
+provance.
+syn_pandas.diff
+syn_pandas2.py
+syn_pandas3.py
+syn_pandas_borrador.py
+testzCopy/
+
