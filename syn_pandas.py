@@ -26,7 +26,7 @@ print('\nlist of syns to joint: {},\nParent folder: {}'.format(entity_list, pare
 ## renaming the columns where we will joint
 ## merging an inner joint on fips
 
-li= [] # empty list to recive the list of frames to reduce
+li= [] # empty list to recive the list of frames to reduceAdd
 for items in entity_list:
         entity = syn.get(items,downloadFile=True, 
                   downloadLocation='.')
@@ -40,5 +40,4 @@ for items in entity_list:
 df_merged.to_csv('big_df2.csv')# changing into csv
 version_2 = syn.store(File('big_df2.csv', parentId=parent_id), used=entity_list)
 
-#project = syn.store(version_2)
 
