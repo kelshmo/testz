@@ -22,7 +22,7 @@ parser.add_argument('assay_synapse_id', type=str,
                         help='Synapse ID for the assay metadata file')
 parser.add_argument('parent_synapse_id', type=str, 
                         help='Parent Synapse ID containing the files to be annoted')
-
+args = parser.parse_args()
 #        entity_list = []
 #        parent_id = str(input('Plese enter the parent ID folder in the syn12345678 format: '))
 #        len_entity_list = int(input('how many data frames are you planning to joint?'))
@@ -50,11 +50,11 @@ for items in entity_list:
                   downloadLocation='.')
         df = pd.read_csv(entity.path)  
         li.append(df)
-        df.columns = df.columns.str.strip().str.lower()
+        #df.columns = df.columns.str.strip().str.lower()
         ## this will change depending of the column name.     
-        df.rename(columns = {'county_fips':'fips'}, inplace = True)## looking to find a more general solution including OOP
-        df.rename(columns = {'countyid':'fips'}, inplace = True)
-        df_merged = reduce(lambda left, right:pd.merge(left, right, on=['fips'], how='inner'),li)
+        #df.rename(columns = {'county_fips':'fips'}, inplace = True)## looking to find a more general solution including OOP
+        #df.rename(columns = {'countyid':'fips'}, inplace = True)
+        df_merged = reduce(lambda left, right:pd.merge(left, right, on=['individualID'], how='inner'),li)
         # reduce a function to an iterable and reduce it to a single cumulative value
 df_merged.to_csv('big_df2.csv')# changing into csv
 version_2 = syn.store(File('big_df.csv', parentId=args.parent_synapse_id), used=entity_list)
