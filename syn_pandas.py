@@ -33,7 +33,7 @@ parser.add_argument('parent_synapse_id', type=str,
 ## Defining an entity list containing the entities 
 ## an emty data frame and assigning the argument passed in arg to the list
 entity_list =[]
-df = pd.Dataframe()
+df = pd.DataFrame()
 entity_list = str([args.individual_synapse_id,
                    args.biospecimen_synapse_id, 
                    args.assay_synapse_id
